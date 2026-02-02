@@ -1,14 +1,10 @@
 # Kinecat
 
-# Setup Guide: Kinect v2 (Xbox One) on macOS — Setup with Conda, libfreenect2, OpenCV, Ultralytics
+Kinecat is a companion program for [Pawjections](https://github.com/thatrobotdev/pawjections) that streams **Kinect v2** color/depth via **libfreenect2** to the Unity game.
 
-This README sets up a **macOS** environment to stream **Kinect v2** color/depth via **libfreenect2** and use it in Python with **OpenCV** and **Ultralytics (YOLO)**.
+## Setup (macOS)
 
-> Microsoft’s Kinect SDK 2.0 is Windows-only; on macOS we use the open-source libfreenect2 driver + Python bindings.
-
----
-
-## Hardware checklist
+### Hardware checklist
 
 * Kinect for **Xbox One (v2)** sensor
 * **Kinect v2 adapter** (12 V power brick + USB 3.0 breakout)
@@ -18,53 +14,43 @@ This README sets up a **macOS** environment to stream **Kinect v2** color/depth 
 
 ## 0) macOS prerequisites
 
+1. Install Xcode command line tools.
+
 ```bash
-# Xcode command line tools (compilers, make, etc.)
 xcode-select --install
-
-# Homebrew (if you don't already have it)
-# https://brew.sh has the official command; typical install:
- /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-brew update
 ```
 
-> **Apple Silicon (M-series)** Homebrew prefix is `/opt/homebrew`.
-> **Intel** Macs usually use `/usr/local`.
+2. Install the [Homebrew package manager](https://brew.sh/).
 
+```sh
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
 ---
 
 ## 1) Build & install libfreenect2 (the Kinect v2 driver)
 
-```bash
-# Dependencies for building libfreenect2
-brew install libusb glfw cmake pkg-config jpeg-turbo
+1. Install build tools
 
-# Get the source
-git clone https://github.com/OpenKinect/libfreenect2.git
-cd libfreenect2
-mkdir build && cd build
-
-# Configure (OpenGL/OpenCL optional but faster than CPU)
-# NOTE: If you hit a "CMake < 3.5 policy" error, see the comment below.
-cmake .. \
-  -DCMAKE_BUILD_TYPE=Release \
-  -DENABLE_OPENGL=ON \
-  -DENABLE_OPENCL=ON
-
-# If you get a CMake policy error:
-# cmake .. -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_BUILD_TYPE=Release -DENABLE_OPENGL=ON -DENABLE_OPENCL=ON
-
-make -j
-sudo make install
+```sh
+# Build tools: wget, git, cmake, pkg-config
+# libfreenect2 Dependencies: libusb, GLFW
+brew install wget git cmake pkgconfig libusb GLFW
 ```
 
-**Test the driver:**
+2. Download libfreenect2 source
 
-```bash
-# From libfreenect2/build (or wherever 'Protonect' was installed)
-./bin/Protonect
-# You should see live Color/IR/Depth windows. CTRL+C to quit.
+```sh
+git clone https://github.com/OpenKinect/libfreenect2.git
+cd libfreenect2
+```
+
+3. Build
+
+```sh
+mkdir build && cd build
+cmake ..
+make
+sudo make install
 ```
 
 ---
