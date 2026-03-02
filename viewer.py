@@ -40,15 +40,27 @@ DEPTH_MIN_M_DEFAULT = 0.1
 DEPTH_MAX_M_DEFAULT = 4.5
 
 def try_import_pipeline():
-    """Pick the best available packet pipeline for pylibfreenect2."""
-    from pylibfreenect2 import OpenGLPacketPipeline, OpenCLPacketPipeline, CpuPacketPipeline
+    from pylibfreenect2 import CpuPacketPipeline
+
+    # Prefer OpenGL if available
     try:
+        from pylibfreenect2 import OpenGLPacketPipeline
+        print("[INFO] Using OpenGL pipeline")
         return OpenGLPacketPipeline()
-    except Exception:
-        try:
-            return OpenCLPacketPipeline()
-        except Exception:
-            return CpuPacketPipeline()
+    except ImportError:
+        pass
+
+    # Try OpenCL only if it exists
+    try:
+        from pylibfreenect2 import OpenCLPacketPipeline
+        print("[INFO] Using OpenCL pipeline")
+        return OpenCLPacketPipeline()
+    except ImportError:
+        pass
+
+    print("[INFO] Falling back to CPU pipeline")
+    return CpuPacketPipeline()
+
 
 def depth_to_colormap(depth_m: np.ndarray, dmin_m: float, dmax_m: float) -> np.ndarray:
     """Convert depth (meters, float32) to a BGR colormap image."""

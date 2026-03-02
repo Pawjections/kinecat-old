@@ -1,31 +1,20 @@
 # Kinecat
 
-Kinecat is a companion program for [Pawjections](https://github.com/thatrobotdev/pawjections) that streams **Kinect v2** color/depth via **libfreenect2** to the Unity game.
+Kinecat is a companion program for [Pawjections](https://github.com/thatrobotdev/pawjections) on macOS that streams **Kinect v2** color/depth via [libfreenect2](https://github.com/OpenKinect/libfreenect2) to the Unity game.
 
-## Setup (macOS)
+## Set-up
 
 ### Hardware checklist
 
-* Kinect for **Xbox One (v2)** sensor
+* **Kinect for Windows v2 (K4W2) device** (tested with Kinect for Xbox One)
 * **Kinect v2 adapter** (12 V power brick + USB 3.0 breakout)
-* USB-C/USB-A **USB 3.x** port (a *powered* hub is recommended if your dongle is under-powered)
+* USB 3.0 controller dedicated to the Kinect for Windows v2 sensor
 
 ---
 
-## 0) macOS prerequisites
-
-1. Install Xcode command line tools.
-
-```bash
+```zsh
 xcode-select --install
 ```
-
-2. Install the [Homebrew package manager](https://brew.sh/).
-
-```sh
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
----
 
 ## 1) Build & install libfreenect2 (the Kinect v2 driver)
 
