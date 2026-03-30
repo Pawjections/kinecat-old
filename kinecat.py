@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU Affero General Public License along
 # with this program. If not, see <https://www.gnu.org/licenses/>. 
 
-# yolo_cat_calibrated.py — Kinect v2 (pylibfreenect2) + YOLO tracking + 4-corner homography + UDP to Unity
+# kinecat.py — Kinect v2 (pylibfreenect2) + YOLO tracking + 4-corner homography + UDP to Unity
 # Run: python yolo_cat_calibrated.py
 from ultralytics import YOLO
 import numpy as np
@@ -339,14 +339,18 @@ def main():
 
                     # Show projected (U,V) on HUD
                     hud_lines.append(f"Proj(U,V)=({int(ema_U)},{int(ema_V)})")
-                else:
-                    hud_lines.append("Center outside calibrated quad — skipped send.")
-            else:
-                # Brief dropout: keep sending the last smoothed point to avoid flicker
-                if (time.time() - last_seen_ts) < DROPOUT_HOLD_S and ema_U is not None and ema_V is not None:
-                    send_to_unity(ema_U, ema_V, 0, 0, -1, 0.0)
-                    sent_this_frame = True
-                    hud_lines.append("Dropout hold → sent last (U,V).")
+            
+            # Dropout hold
+            if not sent_this_frame and (time.time() - last_seen_ts) < DROPOUT_HOLD_S and ema_U is not None:
+                send_to_unity(ema_U, ema_V, 0, 0, -1, 0.0)
+                sent_this_frame = True
+                hud_lines.append("Dropout hold → sent last (U,V).")
+
+            
+            # Default "no detection" send (every frame)
+            if not sent_this_frame:
+                send_to_unity(0, 0, 0, 0, -1, 0.0)
+                hud_lines.append("No cat detected → sent default")
 
             # FPS HUD
             t_now = time.time()

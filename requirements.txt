@@ -1,0 +1,15 @@
+# YOLO / Ultralytics
+ultralytics==8.4.31
+lap>=0.5.12   # required for ByteTrack (tracking)
+
+# Core numerical / image processing
+numpy>=1.26.4,<1.27.0
+opencv-python>=4.8.1,<4.9.0
+
+# PyTorch CPU/GPU for macOS M1/M2/M3
+torch>=2.11.0,<2.12.0
+torchvision>=0.26.0,<0.27.0
+torchaudio>=2.11.0,<2.12.0
+
+# Optional progress bars
+tqdm>=4.66.0,<4.67.0
