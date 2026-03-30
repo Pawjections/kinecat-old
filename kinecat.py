@@ -14,7 +14,7 @@
 # with this program. If not, see <https://www.gnu.org/licenses/>. 
 
 # kinecat.py — Kinect v2 (pylibfreenect2) + YOLO tracking + 4-corner homography + UDP to Unity
-# Run: python yolo_cat_calibrated.py
+# Run: make run
 from ultralytics import YOLO
 import numpy as np
 import cv2
