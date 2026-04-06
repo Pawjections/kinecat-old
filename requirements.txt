@@ -18,7 +18,7 @@ ultralytics==8.4.31
 lap>=0.5.12   # required for ByteTrack (tracking)
 
 # Core numerical / image processing
-numpy>=1.26.4,<1.27.0
+numpy>=1.26.4,<2.5.0
 opencv-python>=4.8.1,<4.9.0
 
 # PyTorch CPU/GPU for macOS M1/M2/M3
