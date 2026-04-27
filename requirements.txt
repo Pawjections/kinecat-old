@@ -14,7 +14,7 @@
 # with this program. If not, see <https://www.gnu.org/licenses/>. 
 
 # YOLO / Ultralytics
-ultralytics==8.4.31
+ultralytics==8.4.41
 lap>=0.5.12   # required for ByteTrack (tracking)
 
 # Core numerical / image processing
