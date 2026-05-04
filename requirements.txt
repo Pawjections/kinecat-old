@@ -15,7 +15,7 @@
 
 # YOLO / Ultralytics
 ultralytics==8.4.31
-lap>=0.5.12   # required for ByteTrack (tracking)
+lap>=0.5.13   # required for ByteTrack (tracking)
 
 # Core numerical / image processing
 numpy>=1.26.4,<1.27.0
